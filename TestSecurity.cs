@@ -11,14 +11,16 @@ public class TestSecurity
         using (SqlConnection connection =
                new SqlConnection(connectionString))
         {
-            string sql =
-                "SELECT * FROM Users WHERE Name = '" + userInput + "'";
+string sql =
+    "SELECT * FROM Users WHERE Name = @name";
 
-            using (SqlCommand command =
-                   new SqlCommand(sql, connection))
-            {
-                command.ExecuteReader();
-            }
+using (SqlCommand command =
+       new SqlCommand(sql, connection))
+{
+    command.Parameters.AddWithValue("@name", userInput);
+
+    command.ExecuteReader();
+}
         }
     }
 }
